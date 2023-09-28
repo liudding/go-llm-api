@@ -205,7 +205,7 @@ func decodeString(body io.Reader, output *string) error {
 func (c *Client) fullURL(model string) string {
 	urlSuffix := chatCompletionsSuffix
 	if model != "" {
-		urlSuffix = "/chat" + model
+		urlSuffix = "/chat/" + model
 	}
 
 	return fmt.Sprintf("%s%s", c.config.BaseURL, urlSuffix)

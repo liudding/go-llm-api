@@ -12,6 +12,23 @@ import (
 	"testing"
 )
 
+func TestCreateChatCompletionRealServer(t *testing.T) {
+	client := NewClient("xxxx", "yyyy", true)
+	resp, err := client.CreateChatCompletion(context.Background(), ChatCompletionRequest{
+		Messages: []ChatCompletionMessage{
+			{
+				Role:    ChatMessageRoleUser,
+				Content: "Hello!",
+			},
+		},
+		Stream: false,
+	}, "ERNIE-Bot")
+	checks.NoError(t, err, "CreateCompletionStream returned error")
+
+	println(resp.ErrorMsg)
+	println(resp.Result)
+}
+
 func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
 	client := NewClient("xxxx", "yyyy", true)
 	stream, err := client.CreateChatCompletionStream(context.Background(), ChatCompletionRequest{
