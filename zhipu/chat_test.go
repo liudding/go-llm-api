@@ -8,7 +8,7 @@ import (
 
 func TestChatCompletion(t *testing.T) {
 	ctx := context.Background()
-	client := NewClient("aiPLbu2x50HyPDGtakmaHDxL", "PqZh8PQCY5OKd767MToE4if5kLkkz2A4", true)
+	client := NewClient("xxxx", "yyyy", true)
 	resp, err := client.CreateChatCompletion(ctx, ChatCompletionRequest{
 		Messages: []ChatCompletionMessage{
 			{

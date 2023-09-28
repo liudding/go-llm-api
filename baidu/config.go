@@ -18,7 +18,6 @@ type ClientConfig struct {
 	ClientSecret string
 
 	BaseURL    string
-	OrgID      string
 	HTTPClient *http.Client
 
 	EmptyMessagesLimit uint
@@ -35,7 +34,6 @@ func DefaultConfig(clientId string, clientSecret string, auto bool) ClientConfig
 		GrantType:    "client_credentials",
 
 		BaseURL: baiduaiAPIURLv1,
-		OrgID:   "",
 
 		HTTPClient: &http.Client{},
 
@@ -52,7 +50,6 @@ func DefaultConfigWithAuth(authToken string) ClientConfig {
 		GrantType: "client_credentials",
 
 		BaseURL: baiduaiAPIURLv1,
-		OrgID:   "",
 
 		HTTPClient: &http.Client{},
 

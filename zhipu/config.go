@@ -18,7 +18,6 @@ type ClientConfig struct {
 	ClientSecret string
 
 	BaseURL    string
-	OrgID      string
 	HTTPClient *http.Client
 
 	EmptyMessagesLimit uint
@@ -32,7 +31,6 @@ func DefaultConfig(authToken string) ClientConfig {
 		authToken: authToken,
 
 		BaseURL: zhipuAPIURLv1,
-		OrgID:   "",
 
 		HTTPClient: &http.Client{},
 

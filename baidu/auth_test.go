@@ -9,7 +9,7 @@ import (
 func TestCreateAccessToken(t *testing.T) {
 	ctx := context.Background()
 
-	client := NewClient("aiPLbu2x50HyPDGtakmaHDxL", "PqZh8PQCY5OKd767MToE4if5kLkkz2A4", false)
+	client := NewClient("xxxx", "yyyy", false)
 	resp, err := client.CreateAccessToken(ctx)
 
 	if err != nil {
