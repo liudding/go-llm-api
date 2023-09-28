@@ -1,8 +1,8 @@
 package baidu_test
 
 import (
-	. "llm-clients/baidu"
-	"llm-clients/internal/test"
+	. "go-llm-api/baidu"
+	"go-llm-api/internal/test"
 	"net/http"
 )
 

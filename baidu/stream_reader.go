@@ -5,8 +5,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	utils "go-llm-api/internal"
 	"io"
-	utils "llm-clients/internal"
 	"net/http"
 )
 

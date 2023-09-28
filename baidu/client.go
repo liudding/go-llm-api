@@ -5,8 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	utils "go-llm-api/internal"
 	"io"
-	utils "llm-clients/internal"
 	"net/http"
 	neturl "net/url"
 )

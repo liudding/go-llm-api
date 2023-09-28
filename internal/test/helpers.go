@@ -1,7 +1,7 @@
 package test
 
 import (
-	"llm-clients/internal/test/checks"
+	"go-llm-api/internal/test/checks"
 	"net/http"
 	"os"
 	"testing"

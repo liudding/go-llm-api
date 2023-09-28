@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	utils "llm-clients/internal"
-	"llm-clients/internal/test"
-	"llm-clients/internal/test/checks"
+	utils "go-llm-api/internal"
+	"go-llm-api/internal/test"
+	"go-llm-api/internal/test/checks"
 	"testing"
 )
 

@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	. "go-llm-api/baidu"
+	"go-llm-api/internal/test/checks"
 	"io"
-	. "llm-clients/baidu"
-	"llm-clients/internal/test/checks"
 	"net/http"
 	"testing"
 )

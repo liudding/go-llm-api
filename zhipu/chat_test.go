@@ -2,7 +2,7 @@ package zhipu_test
 
 import (
 	"context"
-	. "llm-clients/baidu"
+	. "go-llm-api/baidu"
 	"testing"
 )
 
