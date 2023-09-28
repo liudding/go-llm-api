@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	utils "go-llm-api/internal"
+	utils "github.com/liudding/go-llm-api/internal"
 	"io"
 	"net/http"
 	neturl "net/url"

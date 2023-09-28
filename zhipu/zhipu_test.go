@@ -1,8 +1,8 @@
 package zhipu_test
 
 import (
-	. "go-llm-api/baidu"
-	"go-llm-api/internal/test"
+	. "github.com/liudding/go-llm-api/baidu"
+	"github.com/liudding/go-llm-api/internal/test"
 	"net/http"
 )
 

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	. "go-llm-api/baidu"
-	"go-llm-api/internal/test/checks"
+	. "github.com/liudding/go-llm-api/baidu"
+	"github.com/liudding/go-llm-api/internal/test/checks"
 	"io"
 	"net/http"
 	"testing"
@@ -22,7 +22,7 @@ func TestCreateChatCompletionRealServer(t *testing.T) {
 			},
 		},
 		Stream: false,
-	}, "ERNIE-Bot")
+	}, "eb-instant")
 	checks.NoError(t, err, "CreateCompletionStream returned error")
 
 	println(resp.ErrorMsg)

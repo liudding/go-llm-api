@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	utils "go-llm-api/internal"
-	"go-llm-api/internal/test"
-	"go-llm-api/internal/test/checks"
+	utils "github.com/liudding/go-llm-api/internal"
+	"github.com/liudding/go-llm-api/internal/test"
+	"github.com/liudding/go-llm-api/internal/test/checks"
 	"testing"
 )
 

@@ -3,8 +3,8 @@ package internal_test
 import (
 	"bytes"
 	"errors"
-	utils "go-llm-api/internal"
-	"go-llm-api/internal/test"
+	utils "github.com/liudding/go-llm-api/internal"
+	"github.com/liudding/go-llm-api/internal/test"
 	"testing"
 )
 
