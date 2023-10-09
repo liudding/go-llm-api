@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-func setupOpenAITestServer() (client *Client, server *test.ServerTest, teardown func()) {
+func setupZhipuAITestServer() (client *Client, server *test.ServerTest, teardown func()) {
 	server = test.NewTestServer()
-	ts := server.OpenAITestServer()
+	ts := server.AITestServer()
 	ts.Start()
 	teardown = ts.Close
 	config := DefaultConfig("xxx", "yyyy", true)

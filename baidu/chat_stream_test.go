@@ -62,7 +62,7 @@ func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
 }
 
 func TestCreateChatCompletionStream(t *testing.T) {
-	client, server, teardown := setupOpenAITestServer()
+	client, server, teardown := setupBaiduAITestServer()
 	defer teardown()
 	server.RegisterHandler("/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/event-stream")
@@ -138,7 +138,7 @@ func TestCreateChatCompletionStream(t *testing.T) {
 }
 
 func TestCreateChatCompletionStreamError(t *testing.T) {
-	client, server, teardown := setupOpenAITestServer()
+	client, server, teardown := setupBaiduAITestServer()
 	defer teardown()
 	server.RegisterHandler("/v1/chat/completions", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/event-stream")

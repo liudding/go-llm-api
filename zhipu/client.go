@@ -1,7 +1,6 @@
 package zhipu
 
 import (
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -17,11 +16,13 @@ type Client struct {
 
 	requestBuilder    utils.RequestBuilder
 	createFormBuilder func(io.Writer) utils.FormBuilder
+
+	authToken AuthToken
 }
 
-// NewClient creates new OpenAI API client.
-func NewClient(authToken string) *Client {
-	config := DefaultConfig(authToken)
+// NewClient creates new Zhipu AI API client.
+func NewClient(token string) *Client {
+	config := DefaultConfig(token)
 	return NewClientWithConfig(config)
 }
 
@@ -143,19 +144,11 @@ func sendRequestStream[T streamable](client *Client, req *http.Request) (*stream
 	if isFailureStatusCode(resp) {
 		return new(streamReader), client.handleErrorResp(resp)
 	}
-	return &streamReader{
-		emptyMessagesLimit: client.config.EmptyMessagesLimit,
-		reader:             bufio.NewReader(resp.Body),
-		response:           resp,
-		errAccumulator:     utils.NewErrorAccumulator(),
-		unmarshaler:        &utils.JSONUnmarshaler{},
-	}, nil
+	return newStreamReader(resp), nil
 }
 
 func (c *Client) setCommonHeaders(req *http.Request) {
-	// https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#authentication
-	// Azure API Key authentication
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.config.authToken))
+	req.Header.Set("Authorization", fmt.Sprintf("%s", c.config.authToken))
 }
 
 func isFailureStatusCode(resp *http.Response) bool {
