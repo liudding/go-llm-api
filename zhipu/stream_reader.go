@@ -3,6 +3,7 @@ package zhipu
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	utils "github.com/liudding/go-llm-api/internal"
 	"github.com/liudding/go-llm-api/internal/sse"
 	"io"
@@ -48,14 +49,21 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 		return
 	}
 
-	if string(event.Event) == "finish" {
+	e := string(event.Event)
+
+	if e == "finish" {
 		err = io.EOF
+		return
+	}
+
+	if e == "error" || e == "interrupted" {
+		err = errors.New(string(event.Data))
 		return
 	}
 
 	response.Id = string(event.Id)
 	response.Data = string(event.Data)
-	response.Event = string(event.Event)
+	response.Event = e
 
 	return
 }
