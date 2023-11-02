@@ -7,6 +7,8 @@ const (
 	ModelChatGLMPro  = "chatglm_pro"
 	ModelChatGLMStd  = "chatglm_std"
 	ModelChatGLMLite = "chatglm_lite"
+
+	ModelTurbo = "chatglm_turbo"
 )
 
 type ChatCompletionMessage struct {
