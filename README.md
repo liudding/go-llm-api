@@ -62,7 +62,8 @@ func main() {
 ```
 
 ### 智谱
-```
+
+```go
 token, _ := zhipu.GenerateAuthToken(l.svcCtx.Config.ZhipuAi.Key, time.Minute*60)
 client := zhipu.NewClient(token)
 
