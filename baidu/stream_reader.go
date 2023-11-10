@@ -3,6 +3,7 @@ package baidu
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	utils "github.com/liudding/go-llm-api/internal"
 	"github.com/liudding/go-llm-api/internal/sse"
 	"io"
@@ -42,6 +43,18 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 
 	if stream.isFinished {
 		err = io.EOF
+		return
+	}
+
+	if event.Data == nil {
+		unmarshalErr := stream.unmarshaler.Unmarshal(event.Other, &response)
+		if unmarshalErr != nil {
+			return response, unmarshalErr
+		}
+
+		if response.ErrorCode > 0 {
+			return response, fmt.Errorf("[%d][%s]", response.ErrorCode, response.ErrorMsg)
+		}
 		return
 	}
 
