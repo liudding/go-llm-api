@@ -3,6 +3,7 @@ package zhipu
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"errors"
 	utils "github.com/liudding/go-llm-api/internal"
 	"github.com/liudding/go-llm-api/internal/sse"
@@ -51,8 +52,23 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 
 	e := string(event.Event)
 
+	response.Id = string(event.Id)
+	response.Data = string(event.Data)
+	response.Event = e
+
 	if e == "finish" {
 		err = io.EOF
+
+		if m, ok := event.Extra["meta"]; ok {
+			var meta ChatCompletionResponseMeta
+			err := json.Unmarshal(m, &meta)
+			if err != nil {
+				return ChatCompletionResponse{}, err
+			}
+
+			response.Meta = &meta
+		}
+
 		return
 	}
 
@@ -60,10 +76,6 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 		err = errors.New(string(event.Data))
 		return
 	}
-
-	response.Id = string(event.Id)
-	response.Data = string(event.Data)
-	response.Event = e
 
 	return
 }
