@@ -1,6 +1,12 @@
 package baidu
 
-// common.go defines common types used throughout the OpenAI API.
+const (
+	BaiduModelERNIEBot4                 = "completions_pro"
+	BaiduModelERNIEBot                  = "completions"
+	BaiduModelERNIEBotTurbo             = "eb-instant"
+	BaiduModelBLOOMZ7B                  = "bloomz_7b1"
+	BaiduModelQianfanBLOOMZ7BCompressed = "qianfan_bloomz_7b_compressed"
+)
 
 // Usage Represents the total token usage per request to OpenAI.
 type Usage struct {

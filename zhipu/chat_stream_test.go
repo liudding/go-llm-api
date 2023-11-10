@@ -12,7 +12,7 @@ import (
 )
 
 func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
-	token, _ := GenerateAuthToken("69eb358b9619f56a7d09924fbe448b92.3n6X6cRaIpVC0boi", time.Minute*60)
+	token, _ := GenerateAuthToken("xxx", time.Minute*60)
 
 	client := NewClient(token)
 	stream, err := client.CreateChatCompletionStream(context.Background(), ChatCompletionRequest{

@@ -1,7 +1,6 @@
 package baidu
 
 import (
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -149,7 +148,7 @@ func (c *Client) sendRequestRaw(req *http.Request) (body io.ReadCloser, err erro
 	return resp.Body, nil
 }
 
-func sendRequestStream[T streamable](client *Client, req *http.Request) (*streamReader, error) {
+func sendRequestStream(client *Client, req *http.Request) (*streamReader, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "text/event-stream")
 	req.Header.Set("Cache-Control", "no-cache")
@@ -162,13 +161,7 @@ func sendRequestStream[T streamable](client *Client, req *http.Request) (*stream
 	if isFailureStatusCode(resp) {
 		return new(streamReader), client.handleErrorResp(resp)
 	}
-	return &streamReader{
-		emptyMessagesLimit: client.config.EmptyMessagesLimit,
-		reader:             bufio.NewReader(resp.Body),
-		response:           resp,
-		errAccumulator:     utils.NewErrorAccumulator(),
-		unmarshaler:        &utils.JSONUnmarshaler{},
-	}, nil
+	return newStreamReader(resp), nil
 }
 
 func (c *Client) setCommonHeaders(req *http.Request) {
