@@ -9,6 +9,8 @@ import (
 	"fmt"
 	utils "github.com/liudding/go-llm-api/internal"
 	"io"
+	"regexp"
+	"strings"
 	"time"
 )
 
@@ -21,6 +23,8 @@ var (
 
 var (
 	ErrTooManyEmptyStreamMessages = errors.New("stream has sent too many empty messages")
+
+	matchExtraKeyRegex, _ = regexp.Compile(`^([a-zA-z_-]+):`)
 )
 
 type Event struct {
@@ -133,11 +137,17 @@ func (stream *EventStreamReader) processEvent() (*Event, error) {
 		case bytes.HasPrefix(line, headerRetry):
 			event.Retry = append([]byte(nil), trimHeader(len(headerRetry), line)...)
 		default:
-			parts := bytes.Split(line, []byte(":"))
-			if len(parts) == 2 {
-				event.Extra[string(parts[0])] = parts[1]
-			} else {
+			matches := matchExtraKeyRegex.FindSubmatch(line)
+			if len(matches) == 0 {
 				event.Other = line
+			} else {
+				k := string(matches[1])
+				v := strings.Replace(string(line), string(matches[0]), "", 1)
+
+				if event.Extra == nil {
+					event.Extra = make(map[string][]byte)
+				}
+				event.Extra[k] = []byte(v)
 			}
 		}
 	}
