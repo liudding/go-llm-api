@@ -5,8 +5,7 @@ import (
 	"fmt"
 )
 
-// APIError provides error information returned by the OpenAI API.
-// InnerError struct is only valid for Azure OpenAI Service.
+// APIError provides error information returned by the API.
 type APIError struct {
 	ErrorCode int    `json:"error_code,omitempty"`
 	ErrorMsg  string `json:"error_msg"`

@@ -1,11 +1,11 @@
-package zhipu
+package tencent
 
 import (
 	"encoding/json"
 	"fmt"
 )
 
-// APIError provides error information returned by the API.
+// APIError provides error information returned API.
 type APIError struct {
 	ErrorCode int    `json:"error_code,omitempty"`
 	ErrorMsg  string `json:"error_msg"`

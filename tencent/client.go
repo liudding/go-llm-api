@@ -1,9 +1,8 @@
-package zhipu
+package tencent
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	utils "github.com/liudding/go-llm-api/internal"
 	"io"
 	"net/http"
@@ -15,13 +14,11 @@ type Client struct {
 
 	requestBuilder    utils.RequestBuilder
 	createFormBuilder func(io.Writer) utils.FormBuilder
-
-	authToken AuthToken
 }
 
-// NewClient creates new Zhipu AI API client.
-func NewClient(token string) *Client {
-	config := DefaultConfig(token)
+// NewClient creates new Tencent Hunyuan AI API client.
+func NewClient(appId string, secretId string, secretKey string) *Client {
+	config := DefaultConfig(appId, secretId, secretKey)
 	return NewClientWithConfig(config)
 }
 
@@ -89,7 +86,10 @@ func (c *Client) newRequest(ctx context.Context, method, url string, setters ...
 	if err != nil {
 		return nil, err
 	}
-	c.setCommonHeaders(req)
+
+	sign := generateSignature(args.body.(ChatCompletionFullRequest), c.config.secretKey)
+	req.Header.Set("Authorization", sign)
+
 	return req, nil
 }
 
@@ -146,10 +146,6 @@ func sendRequestStream[T streamable](client *Client, req *http.Request) (*stream
 	return newStreamReader(resp), nil
 }
 
-func (c *Client) setCommonHeaders(req *http.Request) {
-	req.Header.Set("Authorization", fmt.Sprintf("%s", c.config.authToken))
-}
-
 func isFailureStatusCode(resp *http.Response) bool {
 	return resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest
 }
@@ -172,16 +168,6 @@ func decodeString(body io.Reader, output *string) error {
 	}
 	*output = string(b)
 	return nil
-}
-
-// fullURL returns full URL for request.
-func (c *Client) fullURL(model string) string {
-	urlSuffix := chatCompletionsSuffix
-	if model != "" {
-		urlSuffix = "/chat" + model
-	}
-
-	return fmt.Sprintf("%s%s", c.config.BaseURL, urlSuffix)
 }
 
 func (c *Client) handleErrorResp(resp *http.Response) error {
