@@ -12,16 +12,16 @@ type ChatCompletionMessage struct {
 
 // ChatCompletionRequest represents a request structure for chat completion API.
 type ChatCompletionRequest struct {
-	Messages    []ChatCompletionMessage `json:"prompt"`
-	Temperature float32                 `json:"temperature,omitempty"`
-	TopP        float32                 `json:"top_p,omitempty"`
-	QueryId     string                  `json:"query_id"`
+	Messages    []ChatCompletionMessage `json:"messages"`
+	Temperature float64                 `json:"temperature,omitempty"`
+	TopP        float64                 `json:"top_p,omitempty"`
+	QueryId     string                  `json:"query_id,omitempty"`
 	Stream      int                     `json:"stream"`
 }
 
 // ChatCompletionFullRequest represents a request structure for chat completion API.
 type ChatCompletionFullRequest struct {
-	AppId     string `json:"app_id"`
+	AppId     int64  `json:"app_id"`
 	SecretId  string `json:"secret_id"`
 	Timestamp int64  `json:"timestamp"`
 	Expired   int64  `json:"expired"`

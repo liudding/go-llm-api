@@ -14,14 +14,14 @@ const (
 
 // ClientConfig is a configuration of a client.
 type ClientConfig struct {
-	appId      string
+	appId      int64
 	secretId   string
 	secretKey  string
 	BaseURL    string
 	HTTPClient *http.Client
 }
 
-func DefaultConfig(appId string, secretId string, secretKey string) ClientConfig {
+func DefaultConfig(appId int64, secretId string, secretKey string) ClientConfig {
 	return ClientConfig{
 		appId:     appId,
 		secretId:  secretId,

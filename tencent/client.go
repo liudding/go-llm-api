@@ -17,7 +17,7 @@ type Client struct {
 }
 
 // NewClient creates new Tencent Hunyuan AI API client.
-func NewClient(appId string, secretId string, secretKey string) *Client {
+func NewClient(appId int64, secretId string, secretKey string) *Client {
 	config := DefaultConfig(appId, secretId, secretKey)
 	return NewClientWithConfig(config)
 }
