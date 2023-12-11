@@ -2,6 +2,7 @@ package baidu
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	utils "github.com/liudding/go-llm-api/internal"
 	"github.com/liudding/go-llm-api/internal/sse"
@@ -49,6 +50,9 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 		if response.ErrorCode > 0 {
 			return response, fmt.Errorf("[%d][%s]", response.ErrorCode, response.ErrorMsg)
 		}
+
+		err = errors.New("data is empty")
+
 		return
 	}
 
