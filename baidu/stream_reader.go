@@ -20,7 +20,7 @@ type streamReader struct {
 }
 
 func newStreamReader(response *http.Response, emptyMessagesLimit uint) *streamReader {
-	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024, emptyMessagesLimit)
+	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 4096, emptyMessagesLimit)
 
 	return &streamReader{
 		reader:         reader,
