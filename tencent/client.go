@@ -143,7 +143,7 @@ func sendRequestStream[T streamable](client *Client, req *http.Request) (*stream
 	if isFailureStatusCode(resp) {
 		return new(streamReader), client.handleErrorResp(resp)
 	}
-	return newStreamReader(resp), nil
+	return newStreamReader(resp, client.config.EmptyMessagesLimit), nil
 }
 
 func isFailureStatusCode(resp *http.Response) bool {
