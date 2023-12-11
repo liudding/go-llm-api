@@ -51,7 +51,7 @@ type EventStreamReader struct {
 	unmarshaler    utils.Unmarshaler
 }
 
-func NewEventStreamReader(stream *bufio.Reader, maxBufferSize int) *EventStreamReader {
+func NewEventStreamReader(stream *bufio.Reader, maxBufferSize int, emptyMessagesLimit uint) *EventStreamReader {
 	scanner := bufio.NewScanner(stream)
 	initBufferSize := minPosInt(4096, maxBufferSize)
 	scanner.Buffer(make([]byte, initBufferSize), maxBufferSize)
@@ -76,9 +76,10 @@ func NewEventStreamReader(stream *bufio.Reader, maxBufferSize int) *EventStreamR
 	scanner.Split(split)
 
 	return &EventStreamReader{
-		scanner:        scanner,
-		errAccumulator: utils.NewErrorAccumulator(),
-		unmarshaler:    &utils.JSONUnmarshaler{},
+		scanner:            scanner,
+		emptyMessagesLimit: emptyMessagesLimit,
+		errAccumulator:     utils.NewErrorAccumulator(),
+		unmarshaler:        &utils.JSONUnmarshaler{},
 	}
 }
 

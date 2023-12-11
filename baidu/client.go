@@ -161,7 +161,7 @@ func sendRequestStream(client *Client, req *http.Request) (*streamReader, error)
 	if isFailureStatusCode(resp) {
 		return new(streamReader), client.handleErrorResp(resp)
 	}
-	return newStreamReader(resp), nil
+	return newStreamReader(resp, client.config.EmptyMessagesLimit), nil
 }
 
 func (c *Client) setCommonHeaders(req *http.Request) {

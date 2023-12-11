@@ -19,6 +19,8 @@ type ClientConfig struct {
 	secretKey  string
 	BaseURL    string
 	HTTPClient *http.Client
+
+	EmptyMessagesLimit uint
 }
 
 func DefaultConfig(appId int64, secretId string, secretKey string) ClientConfig {

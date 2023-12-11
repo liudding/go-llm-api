@@ -14,6 +14,8 @@ type ClientConfig struct {
 	authToken  string
 	BaseURL    string
 	HTTPClient *http.Client
+
+	EmptyMessagesLimit uint
 }
 
 func DefaultConfig(authToken string) ClientConfig {

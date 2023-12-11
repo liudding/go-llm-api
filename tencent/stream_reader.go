@@ -23,8 +23,8 @@ type streamReader struct {
 	unmarshaler    utils.Unmarshaler
 }
 
-func newStreamReader(response *http.Response) *streamReader {
-	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024)
+func newStreamReader(response *http.Response, emptyMessagesLimit uint) *streamReader {
+	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024, emptyMessagesLimit)
 
 	return &streamReader{
 		reader:         reader,

@@ -2,7 +2,6 @@ package baidu
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	utils "github.com/liudding/go-llm-api/internal"
 	"github.com/liudding/go-llm-api/internal/sse"
@@ -10,13 +9,8 @@ import (
 	"net/http"
 )
 
-var (
-	ErrTooManyEmptyStreamMessages = errors.New("stream has sent too many empty messages")
-)
-
 type streamReader struct {
-	emptyMessagesLimit uint
-	isFinished         bool
+	isFinished bool
 
 	reader         *sse.EventStreamReader
 	response       *http.Response
@@ -24,8 +18,8 @@ type streamReader struct {
 	unmarshaler    utils.Unmarshaler
 }
 
-func newStreamReader(response *http.Response) *streamReader {
-	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024)
+func newStreamReader(response *http.Response, emptyMessagesLimit uint) *streamReader {
+	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024, emptyMessagesLimit)
 
 	return &streamReader{
 		reader:         reader,
