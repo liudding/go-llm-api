@@ -112,7 +112,7 @@ func (stream *EventStreamReader) processEvent() (*Event, error) {
 
 	if len(noSpaceMsg) < 1 {
 		emptyMessagesCount++
-		if stream.emptyMessagesLimit > 0 && emptyMessagesCount > stream.emptyMessagesLimit {
+		if emptyMessagesCount > stream.emptyMessagesLimit {
 			return nil, ErrTooManyEmptyStreamMessages
 		}
 		return nil, nil
