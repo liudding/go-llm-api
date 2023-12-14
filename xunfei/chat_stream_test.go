@@ -20,7 +20,7 @@ func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
 			},
 		},
 		Temperature: 0.7,
-	})
+	}, "v3")
 	checks.NoError(t, err, "CreateCompletionStream returned error")
 	defer stream.Close()
 

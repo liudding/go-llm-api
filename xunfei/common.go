@@ -80,29 +80,8 @@ type ChatCompletionRequest struct {
 	Uid         string                  `json:"uid,omitempty"`
 }
 
-// ChatCompletionResponse represents a response structure for chat completion API.
-//type ChatCompletionResponse struct {
-//	Choices []ChatCompletionChoices `json:"choices,omitempty"` // 结果
-//	Usage   Usage                   `json:"usage,omitempty"`   // token 数量
-//	Error   ResponseError           `json:"error,omitempty"`
-//}
-
-type ChatCompletionStreamChoiceDelta struct {
-	Content string `json:"content,omitempty"`
-}
-
-type ChatCompletionChoices struct {
-	Messages ChatCompletionMessage `json:"messages,omitempty"` // 内容，同步模式返回内容，流模式为 null 输出 content 内容总数最多支持 1024token。
-}
-
 type Usage struct {
 	PromptTokens     int `json:"prompt_tokens"`
 	CompletionTokens int `json:"completion_tokens"`
 	TotalTokens      int `json:"total_tokens"`
-}
-
-// ResponseError :错误信息
-type ResponseError struct {
-	Message string `json:"message,omitempty"` // 错误提示信息
-	Code    int    `json:"code,omitempty"`    // Code 错误码
 }
