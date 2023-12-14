@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"io"
@@ -17,9 +18,6 @@ type Client struct {
 	config ClientConfig
 
 	WebSocketDialer *websocket.Dialer
-	websocketConn   *websocket.Conn
-
-	stream *ChatCompletionStream
 }
 
 // NewClient creates new Xunfei Xinghuo AI API client.
@@ -38,28 +36,15 @@ func NewClientWithConfig(config ClientConfig) *Client {
 	}
 }
 
-func (c *Client) GetStream() *ChatCompletionStream {
-	return c.stream
-}
-
-func (c *Client) connect(url string) *websocket.Conn {
-	if c.websocketConn != nil {
-		return c.websocketConn
-	}
-
+func (c *Client) connect(url string) (*websocket.Conn, error) {
 	conn, resp, err := c.WebSocketDialer.Dial(assembleAuthUrl(url, c.config.apiKey, c.config.apiSecret), nil)
 	if err != nil {
-		panic(readResp(resp) + err.Error())
-		return nil
+		return nil, errors.New(readResp(resp) + err.Error())
 	} else if resp.StatusCode != 101 {
-		panic(readResp(resp) + err.Error())
+		return nil, errors.New("error to connect websocket: " + readResp(resp))
 	}
 
-	c.websocketConn = conn
-
-	c.stream = &ChatCompletionStream{newStreamReader(conn)}
-
-	return conn
+	return conn, nil
 }
 
 func readResp(resp *http.Response) string {

@@ -56,12 +56,16 @@ func (c *Client) CreateChatCompletionStream(
 		},
 	}
 
-	c.connect(url)
-	err = c.websocketConn.WriteJSON(fullReq)
+	conn, err := c.connect(url)
 	if err != nil {
-		return nil, err
+		return
 	}
 
-	stream = c.stream
+	err = conn.WriteJSON(fullReq)
+	if err != nil {
+		return
+	}
+
+	stream = &ChatCompletionStream{newStreamReader(conn)}
 	return
 }
