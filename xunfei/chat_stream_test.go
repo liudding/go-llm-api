@@ -1,17 +1,17 @@
-package tencent_test
+package xunfei_test
 
 import (
 	"context"
 	"errors"
 	"fmt"
 	"github.com/liudding/go-llm-api/internal/test/checks"
-	. "github.com/liudding/go-llm-api/tencent"
+	. "github.com/liudding/go-llm-api/xunfei"
 	"io"
 	"testing"
 )
 
 func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
-	client := NewClient(1321094133, "AKID54uXmtqX5RdeR3GG2c0FTVUIVWKvJTWa", "3ua6PUM4UFn7FC2gActypW1JMD6qPkuu")
+	client := NewClient("", "", "")
 	stream, err := client.CreateChatCompletionStream(context.Background(), ChatCompletionRequest{
 		Messages: []ChatCompletionMessage{
 			{
@@ -19,9 +19,7 @@ func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
 				Content: "hi",
 			},
 		},
-		Temperature: 0.77,
-		//TopP: 1,
-		//QueryId:     "testest",
+		Temperature: 0.7,
 	})
 	checks.NoError(t, err, "CreateCompletionStream returned error")
 	defer stream.Close()
@@ -40,6 +38,11 @@ func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
 		}
 
 		//fmt.Printf("error: \n")
-		fmt.Printf("resp: %s\n", response.Choices)
+		if len(response.Payload.Choices.Text) > 0 {
+			fmt.Printf(response.Payload.Choices.Text[0].Content)
+		} else {
+			fmt.Printf("resp: %s\n", response.Payload.Choices.Content)
+		}
+
 	}
 }
