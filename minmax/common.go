@@ -17,15 +17,15 @@ type ChatCompletionMessage struct {
 // ChatCompletionRequest represents a request structure for chat completion API.
 type ChatCompletionRequest struct {
 	Model               string                        `json:"model"`
-	Prompt              string                        `json:"prompt"`
+	Prompt              string                        `json:"prompt,omitempty"`
 	Messages            []ChatCompletionMessage       `json:"messages"`
 	RoleMeta            ChatCompletionRequestRoleMeta `json:"role_meta"`
 	ContinueLastMessage bool                          `json:"continue_last_message"`
 	Temperature         float32                       `json:"temperature,omitempty"`
-	TokensToGenerate    int                           `json:"tokens_to_generate"`
+	TokensToGenerate    int                           `json:"tokens_to_generate,omitempty"`
 	TopP                float32                       `json:"top_p,omitempty"`
 	BeamWidth           int                           `json:"beam_width,omitempty"`
-	Stream              bool                          `json:"incremental"`
+	Stream              bool                          `json:"stream,omitempty"`
 	UseStandardSse      bool                          `json:"use_standard_sse"`
 }
 type ChatCompletionRequestRoleMeta struct {

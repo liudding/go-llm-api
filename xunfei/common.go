@@ -4,6 +4,10 @@ const (
 	ChatMessageRoleUser      = "user"
 	ChatMessageRoleAssistant = "assistant"
 
+	ModelV1 = "v1"
+	ModelV2 = "v2"
+	ModelV3 = "v3"
+
 	parameterChatDomainGeneral   = "general"
 	parameterChatDomainGeneralV2 = "generalv2"
 	parameterChatDomainGeneralV3 = "generalv3"

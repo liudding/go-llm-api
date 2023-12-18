@@ -29,7 +29,7 @@ type streamReader struct {
 }
 
 func newStreamReader(response *http.Response, emptyMessagesLimit uint) *streamReader {
-	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 1024, emptyMessagesLimit)
+	reader := sse.NewEventStreamReader(bufio.NewReader(response.Body), 4096, emptyMessagesLimit)
 
 	return &streamReader{
 		reader:         reader,
@@ -50,9 +50,16 @@ func (stream *streamReader) Recv() (response ChatCompletionResponse, err error) 
 		return
 	}
 
-	err = json.Unmarshal(event.Raw, &response)
-	if err != nil {
-		return
+	if event.Data != nil {
+		err = json.Unmarshal(event.Data, &response)
+		if err != nil {
+			return
+		}
+	} else {
+		err = json.Unmarshal(event.Raw, &response)
+		if err != nil {
+			return
+		}
 	}
 
 	if response.BaseResp.StatusCode != 0 {

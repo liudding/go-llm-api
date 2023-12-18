@@ -189,7 +189,7 @@ func (stream *EventStreamReader) ReadEvent() ([]byte, error) {
 		return event, nil
 	}
 	if err := stream.scanner.Err(); err != nil {
-		if err == context.Canceled {
+		if errors.Is(err, context.Canceled) {
 			return nil, io.EOF
 		}
 		return nil, err

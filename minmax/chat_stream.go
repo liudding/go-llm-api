@@ -30,6 +30,7 @@ func (c *Client) CreateChatCompletionStream(
 			message.SenderType = ChatMessageRoleBot
 		}
 	}
+	request.Stream = true
 
 	req, err := c.newRequest(ctx, http.MethodPost, c.config.BaseURL, withQuery(map[string]string{
 		"GroupId": c.config.groupId,
