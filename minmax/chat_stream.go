@@ -3,6 +3,7 @@ package minmax
 import (
 	"context"
 	"net/http"
+	"strings"
 )
 
 // ChatCompletionStream
@@ -20,6 +21,15 @@ func (c *Client) CreateChatCompletionStream(
 	if request.Model == "" && model != "" {
 		request.Model = model
 	}
+
+	for _, message := range request.Messages {
+		if strings.ToLower(message.SenderType) == "user" {
+			message.SenderType = ChatMessageRoleUser
+		} else if strings.ToLower(message.SenderType) == "bot" || strings.ToLower(message.SenderType) == "assistant" {
+			message.SenderType = ChatMessageRoleBot
+		}
+	}
+
 	req, err := c.newRequest(ctx, http.MethodPost, c.config.BaseURL, withQuery(map[string]string{
 		"GroupId": c.config.groupId,
 	}), withBody(request))
