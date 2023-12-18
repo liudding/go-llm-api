@@ -22,7 +22,8 @@ func (c *Client) CreateChatCompletionStream(
 		request.Model = model
 	}
 
-	for _, message := range request.Messages {
+	for i := range request.Messages {
+		message := &request.Messages[i]
 		if strings.ToLower(message.SenderType) == "user" {
 			message.SenderType = ChatMessageRoleUser
 		} else if strings.ToLower(message.SenderType) == "bot" || strings.ToLower(message.SenderType) == "assistant" {
