@@ -11,7 +11,7 @@ import (
 )
 
 func TestCreateChatCompletionStreamOnRealServer(t *testing.T) {
-	client := NewClient(1321094133, "AKID54uXmtqX5RdeR3GG2c0FTVUIVWKvJTWa", "3ua6PUM4UFn7FC2gActypW1JMD6qPkuu")
+	client := NewClient(123, "", "")
 	stream, err := client.CreateChatCompletionStream(context.Background(), ChatCompletionRequest{
 		Messages: []ChatCompletionMessage{
 			{
